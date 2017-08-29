@@ -95,7 +95,6 @@ class Game extends React.Component {
     }
 
     toggleMovesList() {
-        let state = this.state;
         this.setState({
             reverseMoves: !this.state.reverseMoves
         });
