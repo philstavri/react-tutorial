@@ -93,11 +93,20 @@ class Game extends React.Component {
 
     render() {
 
-        let history = this.state.history;
+        let history = this.state.history.slice();
         let current = history[this.state.stepNumber];
         let winner = calculateWinner(current.squares);
 
+        if(this.state.reverseMoves) {
+            history.reverse();
+        }
+
         let moves = history.map((step, move) => {
+
+            if(this.state.reverseMoves) {
+                move = history.length - (move + 1);
+            }
+
             let desc = move ?
                 'Move #' + move :
                 'Game start';
@@ -127,8 +136,16 @@ class Game extends React.Component {
                     <div>{ status }</div>
                     <ol>{moves}</ol>
                 </div>
+                <button onClick={()=>this.toggleMovesList()}>Toggle moves</button>
             </div>
         );
+    }
+
+    toggleMovesList() {
+        let state = this.state;
+        this.setState({
+            reverseMoves: !this.state.reverseMoves
+        });
     }
 }
 
